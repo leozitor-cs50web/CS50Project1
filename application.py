@@ -14,12 +14,32 @@ app = Flask(__name__)
 
 #Classes
 
+
+class Users:
+
+    counter = 1
+    userList = []
+
+    def __init__(self, user):
+
+        self.id = Users.counter
+        Users.counter += 1
+        userList.append(user)
+
+
 class User:
+
     def __init__(self, fullName, email, telephone, password):
         self.fullName = fullName
         self.email = email
         self.telephone = telephone
         self.password = password
+
+    def print_user(self):
+        print(f"Full Name: {self.fullName}")
+        print(f"Full Name: {self.email}")
+        print(f"Full Name: {self.telephone}")
+        print(f"Full Name: {self.password}")
 
 #users = []
 names = [] # remmover depois
