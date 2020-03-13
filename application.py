@@ -12,7 +12,17 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 app = Flask(__name__)
 
-names = []
+#Classes
+
+class User:
+    def __init__(self, fullName, email, telephone, password):
+        self.fullName = fullName
+        self.email = email
+        self.telephone = telephone
+        self.password = password
+
+#users = []
+names = [] # remmover depois
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
@@ -33,11 +43,11 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/register", methods=["POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
 
     if request.method == "POST":
-        name = request.form.get("fullName")
+        name = request.form.get("fullName", "email")
         names.append(name)
 
     return render_template("register.html", names=names)
