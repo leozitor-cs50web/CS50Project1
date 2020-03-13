@@ -1,7 +1,7 @@
 import os
 #import requests
 
-from flask import Flask, session,render_template
+from flask import Flask, session, render_template, request
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -11,6 +11,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 #print(res.json())
 
 app = Flask(__name__)
+
+names = []
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
@@ -31,6 +33,14 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/register")
+@app.route("/register", methods=["POST"])
 def register():
-    return render_template("register.html")
+
+    if request.method == "POST":
+        name = request.form.get("fullName")
+        names.append(name)
+
+    return render_template("register.html", names=names)
+
+
+

@@ -11,18 +11,25 @@
 
 {% block body %}
 
+
+
 <div class="container" >
 
             <div class="card bg-light"  >
+                <ul>
+                    {% for names in names %}
+                        <li>{{ names }}</li>
+                    {% endfor %}
+                </ul>
             <article class="card-body mx-auto" style="max-width: 400px;">
                 <h4 class="card-title mt-3 text-center">Create Account</h4>
                 <p class="text-center">Get started with your free account</p>
-                <form>
+                <form action="{{ url_for('register') }}" method="post">
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                      </div>
-                    <input name="" class="form-control" placeholder="Full name" type="text">
+                    <input name="fullName" class="form-control" placeholder="Full name" type="text">
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
