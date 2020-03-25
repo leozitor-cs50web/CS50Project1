@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+
+    <title> Books page </title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index')}}">Log out</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Seja Bem vindo {{user.fullname}}
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('booksPage')}}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    {% if alertFlag == 2 %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+            <h4 class="alert-heading" align="center">User Already commented!</h4>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <hr>
+            <p align="center"> user already commented!</p>
+        </div>
+    {% endif %}
+{% if alertFlag == 1 %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert" >
+            <h4 class="alert-heading" align="center">Comment posted</h4>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <hr>
+            <p align="center"> Comment posted!</p>
+        </div>
+    {% endif %}
+  <div style="background-image: url({{ url_for('static', filename='img/booksBackground.jpg') }}); background-size: 100% ; min-height: 1000px; ">
+    <div class="container">
+    <div class="row pt-4 rounded-pill " id="details">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-8 col-sm-12">
+              <div class="jumbotron">
+                <div class="container">
+                  <h1 class="display-4">Book Details</h1>
+                  <p class="lead">ISBN: {{book.isbn}} </p>
+                  <p class="lead">Title: {{book.title}}</p>
+                  <p class="lead">Author: {{book.author}}</p>
+                  <p class="lead">Year: {{book.year}}</p>
+                </div>
+              </div>
+            </div>
+            <div class=" card col-md-4 d-flex justify-content-center">
+              <div class="list-group">
+                <img src="../static/img/goodreads.png" alt="goodreads logo" class="img-fluid mb-3">
+                <button type="button" class="btn btn-secondary mb-3">
+                  Average Rating: <span class="badge badge-light">{{averageScore}}</span>
+                </button>
+                <button type="button" class="btn btn-secondary mb-3">
+                  # of Ratings: <span class="badge badge-light">{{reviewCount}}</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <h3 >Comments</h3>
+          <div class="card mb-3">
+              {% for review in reviews %}
+          <div  class="card-body">
+            <h5 class="card-title" ><span class="badge badge-info">{{review.username}}</span>
+
+                <span class="badge badge-success float-right">{{review.rating}}</span>
+
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted"><span class="badge">{{review.useremail}}</span></h6>
+            <p class="card-text mt-3 alert alert-info">{{review.text}}</p>
+          </div>
+              {% endfor %}
+          </div>
+
+          <hr>
+
+          <form action="/bookPage/{{book.id}}" method="post">
+            <div class="form-group">
+               <label  style= "color:white;" for="Rating">Rating</label>
+               <select class="form-control" id="Rating" name="rating">
+                 <option value="1">1</option>
+                 <option value="2">2</option>
+                 <option value="3">3</option>
+                 <option value="4">4</option>
+                 <option selected="" value="5">5</option>
+               </select>
+             </div>
+             <div class="form-group">
+               <label  style= "color:white;" for="Comments">Comments</label>
+               <textarea  class="form-control" id="Comments" rows="8" name="comments" required=""></textarea>
+             </div>
+             <div class="form-group">
+                <button type="submit" class="btn btn-primary">Post</button>
+             </div>
+          </form>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+  </div>
+
+</div>
+   <!-- </div>
+      <H1>debug part</H1>
+    <li>{{ user.fullname }}</li>
+    <li>{{ book.id }}</li>
+    <li>{{ alertaFlag }}</li>
+      {% for review in reviews %}
+        <li>{{ review }}</li>
+      {% endfor %}
+    </div> -->
+
+{% endblock %}

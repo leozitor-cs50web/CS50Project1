@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+
+    <title> Books page </title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/booksPage.css') }}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index')}}">Log out</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Seja Bem vindo {{user.fullname}}
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index')}}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div style="background-image: url({{ url_for('static', filename='img/booksBackground.jpg') }}); background-size: cover;">
+    {% if alertFlag == 2 %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+            <h4 class="alert-heading" align="center">No books Found!</h4>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <hr>
+            <p align="center"> No books found in this search, try again!</p>
+        </div>
+    {% endif %}
+    <div class="s002" >
+      <form action="{{ url_for('booksPage') }}" method="post">
+        <fieldset>
+          <legend>SEARCH BOOKS</legend>
+        </fieldset>
+        <div class="inner-form" >
+          <div class="input-field first-wrap">
+            <input name="search" id="searchTitle" type="text" placeholder="What Book are you looking for ? " />
+          </div>
+
+          <div  class="input-field fifth-wrap">
+            <button class="btn-search" type="submit">SEARCH</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="container">
+      {% for j in range(0, searchs.__len__(),3) %}
+      <div class="card-deck mb-3 text-center" >
+        {% for i in range(3) %}
+        {% if i+j < searchs.__len__() %}
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+              <h5 class="my-0 font-weight-normal"> ISBN: {{searchs[i+j].isbn}}</h5>
+            </div>
+            <div class="card-body">
+              <h1 class="card-title pricing-card-title"> Title: {{searchs[i+j].title}}</h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Author: {{searchs[i+j].author}}</li>
+              </ul>
+              <button type="submit" onclick="window.location.href='/bookPage/{{searchs[i+j].id}}'" class="btn btn-lg btn-block btn-outline-primary">Check this book</button>
+            </div>
+          </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    </div>
+  <div>
+
+  </div>
+<!-- div debug
+      <H1>debug part</H1>
+      {% for book in searchs %}
+        <li>{{ book }}</li>
+      {% endfor %}
+    </div> -->
+
+
+<!-- </body> -->
+
+
+{% endblock %}
