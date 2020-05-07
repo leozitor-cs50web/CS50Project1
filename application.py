@@ -7,7 +7,6 @@ export DATABASE_URL=postgres://krhubjbfzkqork:964f0fe21fe054c98ada81bff1dea04b54
 
 """
 import os
-import requests
 
 from flask import Flask, session, render_template, jsonify, request
 from flask_session import Session
@@ -169,5 +168,3 @@ def book_api(isbn):
 @app.route("/error")
 def errorPage():
     return render_template("error.html")
-
-
